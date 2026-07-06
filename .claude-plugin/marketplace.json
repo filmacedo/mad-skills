@@ -6,10 +6,10 @@
   },
   "plugins": [
     {
-      "name": "noticed-workflow",
-      "source": "./plugins/noticed-workflow",
+      "name": "noticed-factory",
+      "source": "./plugins/noticed-factory",
       "description": "Filipe's noticed workflow: new-feature, ship-feature, frontend-prototype, design-taste, score-change."
     }
   ],
-  "description": "Filipe's personal skills for building noticed \u2014 spec, build, prototype, design taste, and score-change discipline."
+  "description": "Filipe's personal skills and plugins collection."
 }
