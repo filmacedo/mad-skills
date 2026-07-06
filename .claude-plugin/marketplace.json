@@ -1,0 +1,15 @@
+{
+  "name": "filipe-skills",
+  "owner": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com"
+  },
+  "plugins": [
+    {
+      "name": "noticed-workflow",
+      "source": "./plugins/noticed-workflow",
+      "description": "Filipe's noticed workflow: new-feature, ship-feature, frontend-prototype, design-taste, score-change."
+    }
+  ],
+  "description": "Filipe's personal skills for building noticed \u2014 spec, build, prototype, design taste, and score-change discipline."
+}

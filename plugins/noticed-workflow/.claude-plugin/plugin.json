@@ -1,0 +1,9 @@
+{
+  "name": "noticed-workflow",
+  "description": "Filipe's personal workflow for noticedso/noticed: PRD intake (new-feature), end-to-end build loop (ship-feature), mock-first iteration (frontend-prototype), UI taste rails (design-taste), and relationship-score change protocol (score-change). Grounded in his merged PR history.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com"
+  }
+}
