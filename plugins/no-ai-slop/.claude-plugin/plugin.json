@@ -1,0 +1,9 @@
+{
+  "name": "no-ai-slop",
+  "description": "Detect and remove AI-writing patterns without flattening the writer's voice.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com"
+  }
+}
