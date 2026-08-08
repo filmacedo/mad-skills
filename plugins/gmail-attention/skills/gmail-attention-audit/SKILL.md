@@ -58,6 +58,8 @@ Apply the reference taxonomy. In particular:
 - Do not make a sender-wide rule when one sender has several purposes. Prefer a message-pattern rule, or hold it for review.
 - Treat Gmail categories and importance as signals, never as ground truth.
 
+Before proposing an Events digest, split event-related mail into **event discovery** and **event operations**. Only discovery can be a candidate for automatic digest routing. Keep registrations, waitlists, tickets, receipts, cancellations, significant updates, logistics, reminders, and personal calendar invitations visible unless the user separately approves a rule for them.
+
 Review only:
 
 - uncertain classifications;

@@ -7,7 +7,7 @@ Use one primary classification per message. Classify a deterministic message pat
 | Classification | Meaning | Default future treatment |
 | --- | --- | --- |
 | Inbox | Real conversations, replies, and any mail the user explicitly wants immediately | Keep in Inbox |
-| Events | Invitations, event announcements, registrations, and reminders | Consider a separate weekly Events digest |
+| Events | Event discovery: newsletters, roundups, and announcements of events to consider | Consider a separate weekly Events digest |
 | Content | Editorial newsletters, creator writing, research, and reading | Consider a separate weekly Content digest |
 | Updates | Product, company, competitor, onboarding, and business updates | Consider a separate weekly Updates digest |
 | Notifications | App activity, mentions, exports, and automated alerts | Daily Notifications + Transactions digest, unless timely |
@@ -27,9 +27,18 @@ Use one primary classification per message. Classify a deterministic message pat
 | Unsubscribe confirmation | Explicit “you are unsubscribed”, “successfully unsubscribed”, or preferences-updated message | Notifications | Archive; record source as unsubscribed |
 | Product onboarding | Welcome/getting-started product sequence without security, verification, purchase, or booking language | Updates | Candidate for weekly Updates digest |
 | Terms or privacy update | Terms of service, legal terms, privacy notice/update | Transactions | Candidate for combined daily digest |
-| Luma mail | Sender domain `luma-mail.com`, including subdomains | Events | Candidate for weekly Events digest |
-
 Message patterns override sender rules. A sender-wide rule is safe only when sampled history shows one stable purpose.
+
+## Event discovery versus operations
+
+Do not treat all event-related mail as digest-eligible. Make this split before creating any event rule:
+
+| Type | Examples | Default treatment |
+| --- | --- | --- |
+| Event discovery | Event newsletters, recurring roundups, invitations, and announcements to consider | Candidate for Events digest after audit evidence and approval |
+| Event operations | Registration/waitlist status, tickets, receipts, cancellations, schedule or venue changes, reminders, logistics, and personal calendar invitations | Keep visible or classify by purpose; do not route automatically into the digest |
+
+Do not use an entire event-platform domain as a rule. A platform can send both discovery and operational mail. Derive a sender or subject rule only when the audit demonstrates one stable, discovery-only purpose without false positives.
 
 ## Evidence and cadence
 
