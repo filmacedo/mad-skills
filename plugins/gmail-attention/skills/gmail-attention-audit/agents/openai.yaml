@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gmail Attention Audit"
+  short_description: "Audit and reset who can interrupt your inbox."
+  default_prompt: "Audit my Gmail attention and propose a plan before changing anything."

@@ -1,0 +1,9 @@
+{
+  "name": "gmail-attention",
+  "description": "Audit a Gmail account, reset interruption rules, and deliver the resulting digests.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com"
+  }
+}

@@ -14,6 +14,11 @@
       "name": "no-ai-slop",
       "source": "./plugins/no-ai-slop",
       "description": "Detect and remove AI-writing patterns without flattening the writer's voice."
+    },
+    {
+      "name": "gmail-attention",
+      "source": "./plugins/gmail-attention",
+      "description": "Audit Gmail, reset interruption rules, and deliver the resulting digests."
     }
   ],
   "description": "Filipe's personal skills and plugins collection."
