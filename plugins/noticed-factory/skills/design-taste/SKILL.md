@@ -1,6 +1,6 @@
 ---
 name: design-taste
-description: Use when designing, building, changing, or reviewing any noticed UI — pages, tiles, chips, detail panels, sidebar/nav, empty states, onboarding or connect flows, UI copy — before writing or approving JSX that users will see.
+description: Apply Filipe's noticed UI judgment only when a task directly creates, changes, or reviews user-visible interface output, including rendered JSX/components, styling or layout, interaction affordances, visual states, navigation, onboarding or connect flows, and UI copy. Do not trigger for backend, API, database, ClickHouse, Postgres, identity, pipeline, infrastructure, CI, test-only, docs-only, or non-visual refactor work unless that task also changes user-visible UI.
 ---
 
 # design-taste
