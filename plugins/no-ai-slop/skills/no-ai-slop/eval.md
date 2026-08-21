@@ -37,28 +37,32 @@ For Detect mode, run only **Provenance and authority**, **Anti-overfitting**, an
 20. Are chat leakage and knowledge-cutoff disclaimers gone?
 21. Are dead phrases, transitions, engagement bait, and vague hype gone unless quoted or deliberate?
 22. Are literal or precise uses of “unlock” preserved rather than hard-banned?
+23. Are lists of publications, companies, customers, or notable people contextualized rather than used as unsupported authority?
+24. Are redundant inline headers converted to prose while useful labels followed by new information remain intact?
+25. Are decorative technical metaphors replaced with concrete language while established domain terms and literal uses remain intact?
 
 ## Whole draft
 
-23. Does sentence and paragraph length vary naturally?
-24. Were padded lists of three reduced without breaking real categories?
-25. Are abstract claims as concrete as the source material allows?
-26. Do direct verbs and active subjects carry the prose where natural?
+26. Does sentence and paragraph length vary naturally?
+27. Were padded lists of three reduced without breaking real categories?
+28. Are abstract claims as concrete as the source material allows?
+29. In product, project, or technical writing, was generic copy that could describe anything replaced with a source-backed mechanism, instruction, fact, or number, or cut?
+30. Do direct verbs and active subjects carry the prose where natural?
 
 ## Anti-overfitting
 
-27. Did any generic rule override a deliberate voice choice in human-drafted text?
-28. Did any fix feel forced or less human? If so, was the original restored and noted?
-29. Would the writer recognize the result as their own?
-30. Does it sound natural read aloud?
+31. Did any generic rule override a deliberate voice choice in human-drafted text?
+32. Did any fix feel forced or less human? If so, was the original restored and noted?
+33. Would the writer recognize the result as their own?
+34. Does it sound natural read aloud?
 
 ## Edit output
 
-31. Does the response contain the complete edited draft and a short **What changed** section?
-32. If the editor drafted the source in the same session, was the conflict disclosed and a fresh reviewer recommended?
+35. Does the response contain the complete edited draft and a short **What changed** section?
+36. If the editor drafted the source in the same session, was the conflict disclosed and a fresh reviewer recommended?
 
 ## Detect output
 
-33. Is every finding named, quoted, and paired with a short fix?
-34. Was the draft left unrewritten, unscored, and free of claims about who authored it?
-35. Was an edit offered at the end?
+37. Is every finding named, quoted, and paired with a short fix?
+38. Was the draft left unrewritten, unscored, and free of claims about who authored it?
+39. Was an edit offered at the end?
