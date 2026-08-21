@@ -1,0 +1,37 @@
+{
+  "name": "gmail-attention",
+  "version": "0.2.0",
+  "description": "Audit Gmail once, create safe inbox rules, and run personalized daily or weekly attention briefs.",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com",
+    "url": "https://github.com/filmacedo"
+  },
+  "homepage": "https://github.com/filmacedo/mad-skills/tree/main/plugins/gmail-attention",
+  "repository": "https://github.com/filmacedo/mad-skills",
+  "keywords": [
+    "gmail",
+    "inbox-zero",
+    "email",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Gmail Attention",
+    "shortDescription": "Audit and operate a quieter Gmail inbox",
+    "longDescription": "Audit Gmail interruption patterns, create approved native rules, learn private mailbox preferences, and run action-first daily or focused weekly briefs.",
+    "developerName": "Filipe Macedo",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/filmacedo/mad-skills/tree/main/plugins/gmail-attention",
+    "defaultPrompt": [
+      "Audit my Gmail and propose a cleanup plan.",
+      "Run my personalized Gmail attention brief.",
+      "Summarize my weekly newsletters or event invitations.",
+      "Learn this correction from my last digest."
+    ]
+  }
+}

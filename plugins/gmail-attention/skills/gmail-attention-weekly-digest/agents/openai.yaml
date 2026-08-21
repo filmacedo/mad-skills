@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gmail Attention Weekly Digest"
+  short_description: "Summarize weekly reading or event discovery"
+  default_prompt: "Use $gmail-attention-weekly-digest to prepare my weekly content or events briefing."

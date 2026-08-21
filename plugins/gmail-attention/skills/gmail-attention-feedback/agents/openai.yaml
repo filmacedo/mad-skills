@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gmail Attention Feedback"
+  short_description: "Teach Gmail Attention from corrections"
+  default_prompt: "Use $gmail-attention-feedback to learn this correction from my latest Gmail digest."

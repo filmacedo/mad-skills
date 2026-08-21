@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gmail Attention Daily"
+  short_description: "Run a personalized Gmail priority brief"
+  default_prompt: "Use $gmail-attention-daily to process new Gmail messages and give me an action-first brief."
