@@ -87,6 +87,8 @@ On AI-drafted text, rewrite stacked fragments that perform profundity. On human-
 
 **Weasel attribution — HARD.** Name the source behind “experts agree,” “studies show,” or “many argue,” or cut the claim. Never invent a source.
 
+**Unexplained name-dropping — STRONG.** A list of publications, companies, customers, or notable people is not evidence by itself. Keep the names that carry relevant context and say what each one did, said, or proved; otherwise cut the list.
+
 **Importance puffery — HARD.** Replace “a pivotal moment,” “stands as a testament,” “plays a vital role,” and similar claims with the underlying fact.
 
 **Copulative avoidance — HARD.** Prefer “is” or “has” to “serves as,” “stands as,” “represents a,” “boasts,” or “features” when the longer form adds nothing.
@@ -96,6 +98,8 @@ On AI-drafted text, rewrite stacked fragments that perform profundity. On human-
 **Throat-clearing and faux insight — HARD.** Cut “here's the thing,” “let me be clear,” “what nobody tells you,” and “the part everyone misses” when they only announce importance. Do not flag ordinary uses of “nobody” or “most people.”
 
 **Dramatic reveals — STRONG.** Rewrite noun-phrase reveals such as “The best part: it learns.” Keep colons used as real labels or organization.
+
+**Redundant inline headers — STRONG.** Convert a bold label that merely repeats the sentence after it into prose: “**Performance:** Performance improved” says the same thing twice. Preserve a real label followed by new information: “**Schema in TypeScript.** Tables live in one file.”
 
 **Rhetorical setups — HARD.** Cut “what if I told you,” “think about it,” “plot twist,” and self-answered question-and-answer pairs used as theater.
 
@@ -121,11 +125,16 @@ Treat these as evidence, not a substitute for reading. Quoted examples, titles, 
 
 **Hype — HARD only when vague or promotional:** “unlock your potential,” “unlock growth,” “10x your results,” promises of overnight transformation, and empty claims of superpowers. Literal or precise uses of **unlock** are not automatically banned.
 
+### Contextual jargon
+
+**Decorative technical metaphors — STRONG.** Words such as “substrate,” “wedge,” “vector,” “locus,” “nexus,” “primitive” as a noun, “surface,” “bedrock,” “scaffolding,” “modality,” “gold-plating,” “ratchet,” “endgame,” “north star,” and “flywheel” often make an ordinary mechanism sound more sophisticated. Prefer the concrete mechanism or plain word when the metaphor adds no precision. Preserve established domain terms and literal uses; a phrase such as “API surface” may be the clearest technical name in context.
+
 ## Whole-draft checks
 
 - Does sentence length vary naturally?
 - Are lists of three real categories or near-synonyms padding for completeness?
 - Can abstract claims become concrete using facts already in the draft?
+- In product, project, and technical writing, could a sentence appear unchanged in another project's copy? If so, replace it with a source-backed mechanism, instruction, fact, or number, or cut it.
 - Do direct verbs replace noun phrases such as “made a decision” and “has the ability to”?
 - Does the piece use active voice and human subjects where natural?
 - Did any rule fire so mechanically that the result sounds like an AI imitating a human?
