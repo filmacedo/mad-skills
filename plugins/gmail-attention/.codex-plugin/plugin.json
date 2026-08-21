@@ -1,6 +1,6 @@
 {
   "name": "gmail-attention",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Audit Gmail once, create safe inbox rules, and run personalized daily or weekly attention briefs.",
   "author": {
     "name": "Filipe Macedo",
