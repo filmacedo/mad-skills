@@ -1,6 +1,8 @@
 import importlib.util
 import json
+import multiprocessing
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -10,6 +12,24 @@ SPEC = importlib.util.spec_from_file_location("gmail_attention_memory", SCRIPT)
 memory = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(memory)
+
+
+def record_run_after_delayed_state_read(root, run, state_read):
+    original_read_json = memory._read_json
+
+    def delayed_read_json(path):
+        value = original_read_json(path)
+        if path.name == memory.STATE_FILE:
+            state_read.set()
+            time.sleep(0.5)
+        return value
+
+    memory._read_json = delayed_read_json
+    memory.record_run(Path(root), run)
+
+
+def record_run_in_process(root, run):
+    memory.record_run(Path(root), run)
 
 
 class MemoryStoreTest(unittest.TestCase):
@@ -51,6 +71,47 @@ class MemoryStoreTest(unittest.TestCase):
         self.assertEqual(second["reason"], "Updated reason")
         self.assertEqual(second["created_at"], first["created_at"])
         self.assertEqual(len(self.read_json("persona.json")["preferences"]), 1)
+
+    def test_partial_preference_update_preserves_optional_fields(self):
+        memory.upsert_preference(
+            self.root,
+            {
+                "id": "archive-retired-org",
+                "scope": {"mailbox": "person@example.com"},
+                "matcher": {"authenticated_org": "Example Org"},
+                "classification": "notifications",
+                "attention": "routine_cleanup",
+                "action": "label_and_archive",
+                "digest_visibility": "cleanup",
+                "source": "explicit_user_feedback",
+                "reason": "User is no longer an active member",
+                "standing_permission": True,
+                "expires_at": "2027-08-21T07:00:00Z",
+                "example_message_ids": ["message-1"],
+            },
+        )
+
+        memory.upsert_preference(
+            self.root,
+            {
+                "id": "archive-retired-org",
+                "scope": {"mailbox": "person@example.com"},
+                "action": "archive",
+                "digest_visibility": "hidden",
+                "source": "explicit_user_feedback",
+                "reason": "Updated without repeating optional fields",
+            },
+        )
+
+        preference = self.read_json("persona.json")["preferences"][0]
+        self.assertEqual(preference["matcher"], {"authenticated_org": "Example Org"})
+        self.assertEqual(preference["classification"], "notifications")
+        self.assertEqual(preference["attention"], "routine_cleanup")
+        self.assertTrue(preference["standing_permission"])
+        self.assertEqual(preference["expires_at"], "2027-08-21T07:00:00Z")
+        self.assertEqual(preference["example_message_ids"], ["message-1"])
+        self.assertEqual(preference["action"], "archive")
+        self.assertEqual(preference["digest_visibility"], "hidden")
 
     def test_mailbox_and_output_preferences_are_configurable(self):
         memory.upsert_mailbox(
@@ -182,6 +243,74 @@ class MemoryStoreTest(unittest.TestCase):
             state["pipelines"]["weekly_content"]["mailboxes"]["one@example.com"]["last_successful_cutoff"],
             "2026-08-17T09:00:00Z",
         )
+
+    def test_concurrent_pipeline_updates_do_not_overwrite_each_other(self):
+        context = multiprocessing.get_context("spawn")
+        state_read = context.Event()
+        daily_run = {
+            "id": "run-daily",
+            "pipeline": "daily",
+            "started_at": "2026-08-21T07:00:00Z",
+            "completed_at": "2026-08-21T07:05:00Z",
+            "mailboxes": {
+                "one@example.com": {
+                    "status": "complete",
+                    "cutoff": "2026-08-21T07:00:00Z",
+                }
+            },
+        }
+        weekly_run = {
+            "id": "run-weekly-content",
+            "pipeline": "weekly_content",
+            "started_at": "2026-08-21T08:00:00Z",
+            "completed_at": "2026-08-21T08:05:00Z",
+            "mailboxes": {
+                "one@example.com": {
+                    "status": "complete",
+                    "cutoff": "2026-08-21T08:00:00Z",
+                }
+            },
+        }
+
+        delayed_process = context.Process(
+            target=record_run_after_delayed_state_read,
+            args=(str(self.root), daily_run, state_read),
+        )
+        delayed_process.start()
+        self.assertTrue(state_read.wait(timeout=5), "delayed process did not read state")
+        concurrent_process = context.Process(
+            target=record_run_in_process,
+            args=(str(self.root), weekly_run),
+        )
+        concurrent_process.start()
+        delayed_process.join(timeout=10)
+        concurrent_process.join(timeout=10)
+
+        self.assertEqual(delayed_process.exitcode, 0)
+        self.assertEqual(concurrent_process.exitcode, 0)
+        state = self.read_json("state.json")
+        self.assertIn("daily", state["pipelines"])
+        self.assertIn("weekly_content", state["pipelines"])
+
+    def test_non_array_dedupe_keys_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "must be an array of strings"):
+            memory.record_run(
+                self.root,
+                {
+                    "id": "run-bad-dedupe",
+                    "pipeline": "daily",
+                    "started_at": "2026-08-21T07:00:00Z",
+                    "completed_at": "2026-08-21T07:05:00Z",
+                    "mailboxes": {
+                        "one@example.com": {
+                            "status": "complete",
+                            "cutoff": "2026-08-21T07:00:00Z",
+                            "dedupe_keys": "one@example.com|m1|2026-08-21T06:00:00Z",
+                        }
+                    },
+                },
+            )
+        self.assertNotIn("daily", self.read_json("state.json")["pipelines"])
 
     def test_checkpoint_cannot_move_backward(self):
         first_run = {

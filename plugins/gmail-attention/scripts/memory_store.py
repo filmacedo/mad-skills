@@ -11,9 +11,10 @@ import argparse
 import json
 import os
 import tempfile
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, Iterator, List
 
 
 SCHEMA_VERSION = 1
@@ -24,6 +25,7 @@ PERSONA_FILE = "persona.json"
 STATE_FILE = "state.json"
 FEEDBACK_FILE = "feedback.jsonl"
 CANDIDATES_FILE = "policy-candidates.jsonl"
+STATE_LOCK_FILE = ".state.lock"
 
 SENSITIVE_KEYS = {
     "body",
@@ -84,6 +86,43 @@ def _atomic_json_write(path: Path, value: Dict[str, Any]) -> None:
     finally:
         if os.path.exists(temp_name):
             os.unlink(temp_name)
+
+
+@contextmanager
+def _exclusive_file_lock(path: Path) -> Iterator[None]:
+    """Serialize a read-modify-write transaction across local processes."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(path, os.O_CREAT | os.O_RDWR, 0o600)
+    locked = False
+    try:
+        os.chmod(path, 0o600)
+        if os.name == "nt":
+            import msvcrt
+
+            if os.fstat(descriptor).st_size == 0:
+                os.write(descriptor, b"\0")
+                os.fsync(descriptor)
+            os.lseek(descriptor, 0, os.SEEK_SET)
+            msvcrt.locking(descriptor, msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(descriptor, fcntl.LOCK_EX)
+        locked = True
+        yield
+    finally:
+        if locked:
+            if os.name == "nt":
+                import msvcrt
+
+                os.lseek(descriptor, 0, os.SEEK_SET)
+                msvcrt.locking(descriptor, msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(descriptor, fcntl.LOCK_UN)
+        os.close(descriptor)
 
 
 def _touch_private(path: Path) -> None:
@@ -402,8 +441,16 @@ def upsert_preference(root: Path, preference: Dict[str, Any]) -> None:
         ("id", "scope", "action", "digest_visibility", "source", "reason"),
         "preference",
     )
-    timestamp = now_iso()
     preference = dict(preference)
+    persona_path = root / PERSONA_FILE
+    persona = _read_json(persona_path)
+    preferences = persona.setdefault("preferences", [])
+    existing_index = next((index for index, item in enumerate(preferences) if item.get("id") == preference["id"]), None)
+    existing = preferences[existing_index] if existing_index is not None else None
+    if existing is not None:
+        preference = {**existing, **preference}
+
+    timestamp = now_iso()
     preference.setdefault("confidence", 1.0)
     preference.setdefault("status", "active")
     preference.setdefault("standing_permission", False)
@@ -417,14 +464,10 @@ def upsert_preference(root: Path, preference: Dict[str, Any]) -> None:
     if preference_issues:
         raise ValueError("; ".join(preference_issues))
 
-    persona_path = root / PERSONA_FILE
-    persona = _read_json(persona_path)
-    preferences = persona.setdefault("preferences", [])
-    existing_index = next((index for index, item in enumerate(preferences) if item.get("id") == preference["id"]), None)
     if existing_index is None:
         preferences.append(preference)
     else:
-        preference["created_at"] = preferences[existing_index].get("created_at", preference["created_at"])
+        preference["created_at"] = existing.get("created_at", preference["created_at"])
         preferences[existing_index] = preference
     persona["updated_at"] = timestamp
     _atomic_json_write(persona_path, persona)
@@ -511,7 +554,6 @@ def append_policy_candidate(root: Path, candidate: Dict[str, Any]) -> None:
 
 
 def record_run(root: Path, run: Dict[str, Any]) -> None:
-    init_store(root)
     _reject_sensitive_keys(run)
     _require_fields(run, ("id", "pipeline", "started_at", "completed_at", "mailboxes"), "run")
     pipeline_name = run["pipeline"]
@@ -520,49 +562,57 @@ def record_run(root: Path, run: Dict[str, Any]) -> None:
     if not isinstance(run["mailboxes"], dict):
         raise ValueError("run.mailboxes must be an object keyed by mailbox address")
 
-    state_path = root / STATE_FILE
-    state = _read_json(state_path)
-    pipeline = state.setdefault("pipelines", {}).setdefault(
-        pipeline_name,
-        {"mailboxes": {}, "runs": []},
-    )
-    mailbox_state = pipeline.setdefault("mailboxes", {})
-
-    for address, result in run["mailboxes"].items():
-        if not isinstance(result, dict):
-            raise ValueError(f"run.mailboxes.{address} must be an object")
-        status = result.get("status")
-        if status not in {"complete", "incomplete"}:
-            raise ValueError(f"run.mailboxes.{address}.status must be complete or incomplete")
-
-        current = mailbox_state.setdefault(
-            address,
-            {
-                "last_successful_cutoff": None,
-                "recent_dedupe": [],
-                "pending_reconciliation": [],
-            },
+    root.mkdir(parents=True, exist_ok=True)
+    with _exclusive_file_lock(root / STATE_LOCK_FILE):
+        init_store(root)
+        state_path = root / STATE_FILE
+        state = _read_json(state_path)
+        pipeline = state.setdefault("pipelines", {}).setdefault(
+            pipeline_name,
+            {"mailboxes": {}, "runs": []},
         )
-        if status == "complete":
-            cutoff = result.get("cutoff")
-            if not cutoff:
-                raise ValueError(f"complete mailbox {address} requires cutoff")
-            cutoff_time = _parsed_timestamp(cutoff, f"run.mailboxes.{address}.cutoff")
-            existing_cutoff = current.get("last_successful_cutoff")
-            if existing_cutoff and cutoff_time < _parsed_timestamp(
-                existing_cutoff, f"state.mailboxes.{address}.last_successful_cutoff"
-            ):
-                raise ValueError(f"complete mailbox {address} cannot move its checkpoint backward")
-            current["last_successful_cutoff"] = cutoff
-            dedupe = list(current.get("recent_dedupe", []))
-            dedupe.extend(str(item) for item in result.get("dedupe_keys", []))
-            current["recent_dedupe"] = list(dict.fromkeys(dedupe))[-MAX_DEDUPE:]
+        mailbox_state = pipeline.setdefault("mailboxes", {})
 
-    run_summary = dict(run)
-    pipeline.setdefault("runs", []).append(run_summary)
-    pipeline["runs"] = pipeline["runs"][-MAX_RUNS:]
-    state["updated_at"] = now_iso()
-    _atomic_json_write(state_path, state)
+        for address, result in run["mailboxes"].items():
+            if not isinstance(result, dict):
+                raise ValueError(f"run.mailboxes.{address} must be an object")
+            status = result.get("status")
+            if status not in {"complete", "incomplete"}:
+                raise ValueError(f"run.mailboxes.{address}.status must be complete or incomplete")
+            dedupe_keys = result.get("dedupe_keys", [])
+            dedupe_issues: List[str] = []
+            _validate_string_list(dedupe_keys, f"run.mailboxes.{address}.dedupe_keys", dedupe_issues)
+            if dedupe_issues:
+                raise ValueError("; ".join(dedupe_issues))
+
+            current = mailbox_state.setdefault(
+                address,
+                {
+                    "last_successful_cutoff": None,
+                    "recent_dedupe": [],
+                    "pending_reconciliation": [],
+                },
+            )
+            if status == "complete":
+                cutoff = result.get("cutoff")
+                if not cutoff:
+                    raise ValueError(f"complete mailbox {address} requires cutoff")
+                cutoff_time = _parsed_timestamp(cutoff, f"run.mailboxes.{address}.cutoff")
+                existing_cutoff = current.get("last_successful_cutoff")
+                if existing_cutoff and cutoff_time < _parsed_timestamp(
+                    existing_cutoff, f"state.mailboxes.{address}.last_successful_cutoff"
+                ):
+                    raise ValueError(f"complete mailbox {address} cannot move its checkpoint backward")
+                current["last_successful_cutoff"] = cutoff
+                dedupe = list(current.get("recent_dedupe", []))
+                dedupe.extend(dedupe_keys)
+                current["recent_dedupe"] = list(dict.fromkeys(dedupe))[-MAX_DEDUPE:]
+
+        run_summary = dict(run)
+        pipeline.setdefault("runs", []).append(run_summary)
+        pipeline["runs"] = pipeline["runs"][-MAX_RUNS:]
+        state["updated_at"] = now_iso()
+        _atomic_json_write(state_path, state)
 
 
 def _build_parser() -> argparse.ArgumentParser:
