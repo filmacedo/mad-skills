@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/filmacedo/mad-skills/gmail-attention/policy-candidate.schema.json",
+  "title": "Gmail Attention Shared Policy Candidate",
+  "type": "object",
+  "required": ["id", "recorded_at", "status", "proposed_rule", "rationale", "regression_case", "counterexamples"],
+  "properties": {
+    "id": { "type": "string" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "status": { "const": "pending" },
+    "proposed_rule": { "type": "string" },
+    "rationale": { "type": "string" },
+    "regression_case": { "type": "object" },
+    "counterexamples": { "type": "array", "items": { "type": "string" } },
+    "source_feedback_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  },
+  "additionalProperties": false
+}

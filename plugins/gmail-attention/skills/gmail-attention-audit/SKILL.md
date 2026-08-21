@@ -1,142 +1,132 @@
 ---
 name: gmail-attention-audit
-description: Audit and reset a connected Gmail account's interruption rules. Use when a user wants to understand all mail in Gmail or All Mail, protect their Inbox for people and timely action, classify recurring senders or message patterns, review newsletter/product/event/notification traffic, create Gmail labels and filters, unsubscribe or block mail, clean up backlog, or deliver ongoing email digests.
+description: Run a one-time Gmail attention audit, propose an evidence-backed cleanup plan, and implement only approved labels, filters, backlog changes, unsubscribes, or blocks. Use for initial inbox cleanup or a deliberate re-audit; do not use for recurring daily processing.
 ---
 
 # Gmail Attention Audit
 
-Run a complete loop: audit Gmail, explain what is happening, propose a future mail plan, obtain explicit approval, implement approved Gmail changes, and deliver the digests the plan promises.
+Audit Gmail once, explain what is interrupting the user, agree on a future mail plan, and implement the approved Gmail-native changes. The outcome is a quieter Inbox plus a portable persona policy that a separate recurring workflow may consume.
 
-The principle is simple: **the Inbox is for people and timely action; regular non-important mail is delivered deliberately.**
+The principle is: **the Inbox is for people and timely action; predictable lower-value mail is delivered deliberately.**
+
+Before classifying mail, read the plugin's shared [general policy](../../policy/general-policy.md) and [classification policy](../../policy/classification.md). Read [the audit reference](references/classification.md) before grouping history or proposing Gmail rules. Read [security policy](../../policy/security.md) before recommending unsubscribe, spam, block, or any action involving email links.
+
+## Boundary
+
+This skill owns a one-time audit and implementation plan. It does not:
+
+- process incremental daily windows;
+- maintain successful-run checkpoints;
+- generate a recurring executive brief;
+- silently install a scheduled task;
+- rewrite shared plugin policy from one user's preferences.
+
+If the user wants recurring processing, finish the audit first and hand the approved persona to `$gmail-attention-daily`. Create or update a schedule only when the user explicitly asks.
 
 ## Modes and authority
 
-Start in **Audit** mode. Reading Gmail is allowed. Do not archive, label, unsubscribe, block, create filters, or send a digest until the user explicitly approves a presented change set.
+Use these modes in order unless the user explicitly resumes a later one:
 
-Use these modes in order unless the user asks to resume a later one:
-
-1. **Audit** — inventory and classify mail; make no changes.
+1. **Audit** — read, inventory, and classify; make no changes.
 2. **Review** — resolve only meaningful uncertainty and user choices.
-3. **Plan** — show exact future rules and past-backlog actions.
+3. **Plan** — present exact future rules and backlog actions.
 4. **Implement** — apply only the approved plan.
-5. **Digest** — deliver and verify the promised daily/weekly digest.
+5. **Handoff** — report results and persist the approved persona policy.
 
-Never blur a past finding with a future rule. Say whether a statement describes historical mail, a proposed rule, or a completed Gmail action.
+Reading is allowed in Audit mode. Do not archive, label, unsubscribe, block, create filters, or send mail until the exact change set has been presented and explicitly approved. Never blur historical findings, proposed rules, and completed actions.
 
-## Start the audit
+## Establish account scope
 
-1. Confirm the connected Gmail account and scope. Default to **All Mail** for the last 12 months, excluding Sent, Drafts, Spam, and Trash. Ask one concise question only when account, scope, or timeframe is not clear.
-2. Explain that Sent mail is used only as reply evidence. Do not mistake an archived Inbox for a lack of mail; All Mail is the source of truth.
-3. Retrieve all matching messages with pagination. Do not claim a complete audit until the result count is reconciled. Start from message metadata; read bodies only for ambiguous, high-impact candidates.
-4. Create a canonical message inventory. Every message must receive one classification and may match zero or one high-confidence message-pattern rule.
-5. Preserve dates. Report both the audit-period total and the recent eight-week pattern. A yearly average must not hide a recent change in cadence.
+1. Resolve each requested Gmail connection to its authenticated profile email before searching.
+2. Fail closed for a connection whose identity cannot be confirmed. Never inspect a different mailbox as a substitute.
+3. Keep message IDs, thread IDs, searches, labels, writes, links, and counts associated with their originating mailbox.
+4. Default to All Mail for the previous 12 months, excluding Sent, Drafts, Spam, and Trash. Use Sent only as reply evidence.
+5. Complete pagination and reconcile the result count before calling the audit complete.
 
-Read [the classification reference](references/classification.md) before assigning categories or proposing rules.
+For multiple accounts, audit each independently and present both per-mailbox and combined findings. A failure in one mailbox must not contaminate another mailbox's results.
 
-## Explain the audit before asking for decisions
+## Build the inventory
 
-Teach a user with no prior context:
+- Start from metadata and headers. Read bodies or surrounding threads only for ambiguous, mixed-purpose, security-sensitive, or high-impact candidates.
+- Give every message one semantic purpose and one attention level from the shared classification policy.
+- Preserve exact received timestamps and deduplicate by `(mailbox, Gmail message ID, exact received timestamp)`.
+- Group only recurring messages with the same sender and purpose. Do not assume a sender has one purpose.
+- Report both the full audit-period total and the recent eight-week pattern so an annual average cannot hide a recent change.
 
-- Say what mail was analyzed and how many messages were found.
-- Explain the categories in plain language.
-- State what was clearly classified automatically and what still needs human judgment.
-- Show the evidence behind every suggested rule: representative subjects, sender or pattern, historical count, first/last seen, and recent cadence.
-- Separate **past analysis** from **future plan** in both headings and language.
+## Explain findings
 
-Do not call a hidden label, an archive, or a mailbox search a user-facing digest. A digest is a delivery the user will actually receive.
+Before requesting decisions:
 
-## Classification and review
+- state the mailboxes, period, exclusions, and exact message count;
+- explain the categories in plain language;
+- separate confident classifications from groups needing judgment;
+- show representative subjects, historical count, first and last seen, recent cadence, reply evidence, and unsubscribe availability for every proposed rule;
+- distinguish native Gmail signals from conclusions; Gmail categories and importance are evidence, not ground truth.
 
-Classify message patterns before sender identity. A person can send a normal conversation and an `Accepted:` calendar response; only the calendar response is routine.
+Do not call labels or archived search results a digest. A digest is a delivery the user actually receives.
 
-Then group messages into a **sender-purpose group** only when the same sender and purpose recur. Do not invent a generic “stream” concept for the user. Explain it as: “messages from this sender that follow the same pattern.”
+## Present one explicit plan
 
-Apply the reference taxonomy. In particular:
-
-- Never treat `List-Unsubscribe` alone as proof that mail is editorial Content. It is evidence of a mailing list, not its purpose.
-- Keep confirmed-unsubscribed sources in a small audit record and exclude them from another unsubscribe review.
-- Do not make a sender-wide rule when one sender has several purposes. Prefer a message-pattern rule, or hold it for review.
-- Treat Gmail categories and importance as signals, never as ground truth.
-
-Before proposing an Events digest, split event-related mail into **event discovery** and **event operations**. Only discovery can be a candidate for automatic digest routing. Keep registrations, waitlists, tickets, receipts, cancellations, significant updates, logistics, reminders, and personal calendar invitations visible unless the user separately approves a rule for them.
-
-Review only:
-
-- uncertain classifications;
-- high-volume or recently accelerating groups;
-- groups with mixed purposes;
-- groups where the user must choose Inbox, Digest, Unsub, or Block.
-
-Do not make the user review every individual message. Start with high-confidence automatic patterns and high-impact ambiguous groups. User decisions correct the model; preserve their choices in the audit output.
-
-## Decide whether a digest is warranted
-
-Assess each proposed digest separately: Events, Content, Updates, and the combined daily Notifications + Transactions delivery are distinct products.
-
-Recommend a digest only when recent behavior shows it will consolidate multiple regular interruptions. Two or more digest-eligible messages per active week is strong evidence, not a hard gate. Consider recent acceleration, time sensitivity, and sender-level cadence. Explain the evidence and leave the final decision to the user.
-
-If a category has only one occasional message, keep it in Inbox or leave it for review; do not create a digest that creates more email than it saves.
-
-## Present the plan
-
-After review, present one explicit change set. Group it by outcome:
+Group the plan by outcome:
 
 ```text
 Future Gmail rules
-- Calendar acceptances → archive
-- Luma event mail → Weekly Events digest
+- Exact matcher → label, archive/keep, and rationale
 
 Existing backlog
-- Apply Events label and archive 34 matching messages
+- Exact matcher → count and proposed change
 
 Removal queue
-- Unsubscribe: 4 senders
-- Block: 1 cold-outreach sender
+- Unsubscribe, spam, or block candidates with evidence
 
-Digest delivery
-- Weekly Events: proposed delivery method and first send time
+Persona preferences
+- The durable user-specific decisions this audit will save
+
+Optional recurring handoff
+- Whether a daily or weekly skill is warranted and why
 ```
 
-For every line, specify:
+For every line, include the exact matcher, historical count, recent cadence, future action, backlog action, and any delivery cadence. Prefer deterministic message-pattern rules. Propose a sender-wide or organization-wide rule only when history shows a stable purpose or the user explicitly chooses that broader scope.
 
-- exact matcher (sender, domain, or message pattern);
-- matching historical count and recent cadence;
-- Gmail action for future mail;
-- backlog action, if any;
-- digest and delivery cadence, if applicable.
-
-Ask for one explicit confirmation to apply the exact plan. A phrase such as “looks good” is not approval if the plan has not been displayed in the current context. Preserve edits and re-present the updated plan before acting.
+Re-present the final edited plan and ask for one explicit confirmation before implementing it.
 
 ## Implement and verify
 
-After explicit approval:
+After approval:
 
-1. Create only the labels, filters, unsubscribe/block actions, and backlog changes in the approved change set.
-2. Use exact Gmail searches and inspect the matching set before bulk changes. Keep an action log with counts, matchers, timestamps, and outcomes.
-3. Apply message-pattern rules independently from sender-wide rules. For example, archive `Accepted:` mail without changing ordinary mail from that person.
-4. For unsubscribe, use the standard mechanism when available. Clearly distinguish completed, requested, manual confirmation required, filtered, and failed. Never call filtering a completed unsubscribe.
-5. Verify each Gmail write by checking the affected messages, labels, filters, or unsubscribe outcome. Report any item that could not be completed.
+1. Resolve each exact Gmail search again immediately before mutation.
+2. Create only approved labels and filters.
+3. Archive only by removing `INBOX`; preserve read state, starred state, importance, and unrelated labels.
+4. Treat writes as idempotent. If a result is uncertain, inspect current state before retrying.
+5. For unsubscribe, distinguish completed, requested, confirmation pending, manual action required, filtered, and failed. Never describe filtering as an unsubscribe.
+6. Require explicit authorization for spam reporting and blocking, scoped to the named sender or rule.
+7. Verify every label, filter, archive, unsubscribe, spam, and block outcome.
 
-## Deliver digests
+## Persist the persona handoff
 
-The same skill owns delivery. Choose and implement the most reliable method available in the current environment; do not make the user design the mechanism.
+Read [memory policy](../../policy/memory.md). When local project storage is available, initialize or validate the user-owned memory directory with:
 
-A digest must contain the messages the user is meant to see, with sender, subject, date, and an openable Gmail or source link when available. It may summarize, but must not silently omit matching mail.
+```bash
+python3 ../../scripts/memory_store.py init --root <memory-root>
+python3 ../../scripts/memory_store.py validate --root <memory-root>
+```
 
-If recurring scheduling is available, set it up only as part of the approved plan and verify the delivery configuration. If it is not available, support an explicit “send my digest now” run and say plainly that recurring delivery is not configured. Never describe labels plus archived messages as a digest.
+Default `<memory-root>` to an explicit user-provided location or the current project's `.gmail-attention/` directory. Never write persona data into the installed plugin. If durable storage is unavailable, return the proposed persona as a JSON artifact and say plainly that it has not been persisted.
 
-For the combined daily Notifications + Transactions digest, send one delivery with clear sections. Keep weekly Events, Content, and Updates digests separate unless the user explicitly merges them.
+Configure each verified account with `upsert-mailbox`, save presentation choices with `set-output-preferences`, and save each approved behavior with `upsert-preference`. All three commands accept `--root` and `--json` using either inline JSON or `@path/to/file.json`.
+
+Store only approved preferences and compact evidence. Do not store message bodies. Record inferred preferences as proposals, not active rules. Run `validate` again after the handoff is written.
 
 ## Completion report
 
 Return a concise before/after report containing:
 
-- audit scope and exact message count;
+- scope and exact counts;
 - classifications and recent cadence;
-- rules created;
-- backlog messages changed;
-- unsubscribe/block outcomes;
-- digest delivery status and next scheduled run, if any;
-- unresolved groups and manual follow-ups.
+- Gmail rules and backlog changes completed;
+- unsubscribe, spam, and block outcomes;
+- persona preferences persisted;
+- unresolved groups or manual follow-ups;
+- whether a recurring handoff was configured.
 
-Store the audit and decision record in Markdown and JSON when the environment supports files. Never store message bodies unless the user asks.
+If any operation could not be verified, say so and do not claim the audit is complete.

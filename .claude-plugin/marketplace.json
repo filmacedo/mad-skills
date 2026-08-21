@@ -18,7 +18,7 @@
     {
       "name": "gmail-attention",
       "source": "./plugins/gmail-attention",
-      "description": "Audit Gmail, reset interruption rules, and deliver the resulting digests."
+      "description": "Audit Gmail once, create safe inbox rules, and optionally run a personalized daily attention brief."
     }
   ],
   "description": "Filipe's personal skills and plugins collection."
