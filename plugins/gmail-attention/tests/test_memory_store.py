@@ -60,8 +60,17 @@ class MemoryStoreTest(unittest.TestCase):
                 "connection": "gmail_primary",
                 "timezone": "Europe/Lisbon",
                 "account_tag": "work",
-                "allowed_labels": ["Updates", "Notifications"],
+                "allowed_labels": [
+                    "Updates",
+                    "Notifications",
+                    "Newsletters/Weekly Digest",
+                    "Events/Discovery",
+                ],
                 "allowed_actions": ["label", "archive"],
+                "label_map": {
+                    "content": "Newsletters/Weekly Digest",
+                    "events": "Events/Discovery",
+                },
             },
         )
         memory.set_output_preferences(
@@ -118,6 +127,7 @@ class MemoryStoreTest(unittest.TestCase):
             self.root,
             {
                 "id": "run-1",
+                "pipeline": "daily",
                 "started_at": "2026-08-21T07:00:00Z",
                 "completed_at": "2026-08-21T07:05:00Z",
                 "mailboxes": {
@@ -135,14 +145,48 @@ class MemoryStoreTest(unittest.TestCase):
         )
         state = self.read_json("state.json")
         self.assertEqual(
-            state["mailboxes"]["one@example.com"]["last_successful_cutoff"],
+            state["pipelines"]["daily"]["mailboxes"]["one@example.com"]["last_successful_cutoff"],
             "2026-08-21T07:00:00Z",
         )
-        self.assertIsNone(state["mailboxes"]["two@example.com"]["last_successful_cutoff"])
+        self.assertIsNone(
+            state["pipelines"]["daily"]["mailboxes"]["two@example.com"]["last_successful_cutoff"]
+        )
+
+    def test_pipelines_advance_independently(self):
+        for pipeline, cutoff in (
+            ("daily", "2026-08-21T07:00:00Z"),
+            ("weekly_content", "2026-08-17T09:00:00Z"),
+        ):
+            memory.record_run(
+                self.root,
+                {
+                    "id": f"run-{pipeline}",
+                    "pipeline": pipeline,
+                    "started_at": cutoff,
+                    "completed_at": cutoff,
+                    "mailboxes": {
+                        "one@example.com": {
+                            "status": "complete",
+                            "cutoff": cutoff,
+                        }
+                    },
+                },
+            )
+
+        state = self.read_json("state.json")
+        self.assertEqual(
+            state["pipelines"]["daily"]["mailboxes"]["one@example.com"]["last_successful_cutoff"],
+            "2026-08-21T07:00:00Z",
+        )
+        self.assertEqual(
+            state["pipelines"]["weekly_content"]["mailboxes"]["one@example.com"]["last_successful_cutoff"],
+            "2026-08-17T09:00:00Z",
+        )
 
     def test_checkpoint_cannot_move_backward(self):
         first_run = {
             "id": "run-newer",
+            "pipeline": "daily",
             "started_at": "2026-08-21T07:00:00Z",
             "completed_at": "2026-08-21T07:05:00Z",
             "mailboxes": {
@@ -155,6 +199,7 @@ class MemoryStoreTest(unittest.TestCase):
         memory.record_run(self.root, first_run)
         older_run = {
             "id": "run-older",
+            "pipeline": "daily",
             "started_at": "2026-08-20T07:00:00Z",
             "completed_at": "2026-08-20T07:05:00Z",
             "mailboxes": {

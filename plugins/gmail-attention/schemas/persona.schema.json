@@ -20,7 +20,11 @@
           "timezone": { "type": "string" },
           "account_tag": { "type": "string" },
           "allowed_labels": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-          "allowed_actions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+          "allowed_actions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "label_map": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          }
         },
         "additionalProperties": false
       }

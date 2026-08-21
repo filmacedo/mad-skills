@@ -166,8 +166,7 @@ def init_store(root: Path, user_id: str = "") -> None:
             {
                 "schema_version": SCHEMA_VERSION,
                 "updated_at": timestamp,
-                "mailboxes": {},
-                "runs": [],
+                "pipelines": {},
             },
         )
 
@@ -220,6 +219,19 @@ def _validate_mailbox(mailbox: Any, field: str, issues: List[str]) -> None:
     for key in ("allowed_labels", "allowed_actions"):
         if key in mailbox:
             _validate_string_list(mailbox[key], f"{field}.{key}", issues)
+    label_map = mailbox.get("label_map")
+    if label_map is not None:
+        if not isinstance(label_map, dict):
+            issues.append(f"{field}.label_map must be an object")
+        else:
+            allowed_labels = set(mailbox.get("allowed_labels", []))
+            for purpose, label in label_map.items():
+                if purpose not in CLASSIFICATIONS:
+                    issues.append(f"{field}.label_map has unsupported purpose {purpose}")
+                if not isinstance(label, str) or not label.strip():
+                    issues.append(f"{field}.label_map.{purpose} must be a non-empty string")
+                elif label not in allowed_labels:
+                    issues.append(f"{field}.label_map.{purpose} must be present in allowed_labels")
 
 
 def _validate_preference(preference: Any, field: str, issues: List[str]) -> None:
@@ -341,15 +353,24 @@ def validate_store(root: Path) -> List[str]:
     try:
         state = _read_json(root / STATE_FILE)
         _reject_sensitive_keys(state)
-        for field in ("schema_version", "updated_at", "mailboxes", "runs"):
+        for field in ("schema_version", "updated_at", "pipelines"):
             if field not in state:
                 issues.append(f"state.json missing {field}")
         if state.get("schema_version") != SCHEMA_VERSION:
             issues.append("state.json has unsupported schema_version")
-        if not isinstance(state.get("mailboxes"), dict):
-            issues.append("state.json mailboxes must be an object")
-        if not isinstance(state.get("runs"), list):
-            issues.append("state.json runs must be a list")
+        pipelines = state.get("pipelines")
+        if not isinstance(pipelines, dict):
+            issues.append("state.json pipelines must be an object")
+        else:
+            for pipeline_name, pipeline in pipelines.items():
+                field = f"state.pipelines.{pipeline_name}"
+                if not isinstance(pipeline, dict):
+                    issues.append(f"{field} must be an object")
+                    continue
+                if not isinstance(pipeline.get("mailboxes"), dict):
+                    issues.append(f"{field}.mailboxes must be an object")
+                if not isinstance(pipeline.get("runs"), list):
+                    issues.append(f"{field}.runs must be an array")
         _validate_timestamp(state.get("updated_at"), "state.updated_at", issues)
     except (ValueError, json.JSONDecodeError) as exc:
         issues.append(f"state.json: {exc}")
@@ -492,13 +513,20 @@ def append_policy_candidate(root: Path, candidate: Dict[str, Any]) -> None:
 def record_run(root: Path, run: Dict[str, Any]) -> None:
     init_store(root)
     _reject_sensitive_keys(run)
-    _require_fields(run, ("id", "started_at", "completed_at", "mailboxes"), "run")
+    _require_fields(run, ("id", "pipeline", "started_at", "completed_at", "mailboxes"), "run")
+    pipeline_name = run["pipeline"]
+    if not isinstance(pipeline_name, str) or not pipeline_name.strip():
+        raise ValueError("run.pipeline must be a non-empty string")
     if not isinstance(run["mailboxes"], dict):
         raise ValueError("run.mailboxes must be an object keyed by mailbox address")
 
     state_path = root / STATE_FILE
     state = _read_json(state_path)
-    mailbox_state = state.setdefault("mailboxes", {})
+    pipeline = state.setdefault("pipelines", {}).setdefault(
+        pipeline_name,
+        {"mailboxes": {}, "runs": []},
+    )
+    mailbox_state = pipeline.setdefault("mailboxes", {})
 
     for address, result in run["mailboxes"].items():
         if not isinstance(result, dict):
@@ -531,8 +559,8 @@ def record_run(root: Path, run: Dict[str, Any]) -> None:
             current["recent_dedupe"] = list(dict.fromkeys(dedupe))[-MAX_DEDUPE:]
 
     run_summary = dict(run)
-    state.setdefault("runs", []).append(run_summary)
-    state["runs"] = state["runs"][-MAX_RUNS:]
+    pipeline.setdefault("runs", []).append(run_summary)
+    pipeline["runs"] = pipeline["runs"][-MAX_RUNS:]
     state["updated_at"] = now_iso()
     _atomic_json_write(state_path, state)
 

@@ -3,24 +3,34 @@
   "$id": "https://github.com/filmacedo/mad-skills/gmail-attention/state.schema.json",
   "title": "Gmail Attention Run State",
   "type": "object",
-  "required": ["schema_version", "updated_at", "mailboxes", "runs"],
+  "required": ["schema_version", "updated_at", "pipelines"],
   "properties": {
     "schema_version": { "const": 1 },
     "updated_at": { "type": "string", "format": "date-time" },
-    "mailboxes": {
+    "pipelines": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": ["last_successful_cutoff", "recent_dedupe", "pending_reconciliation"],
+        "required": ["mailboxes", "runs"],
         "properties": {
-          "last_successful_cutoff": { "type": ["string", "null"], "format": "date-time" },
-          "recent_dedupe": { "type": "array", "items": { "type": "string" }, "maxItems": 500 },
-          "pending_reconciliation": { "type": "array", "items": { "type": "object" } }
+          "mailboxes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["last_successful_cutoff", "recent_dedupe", "pending_reconciliation"],
+              "properties": {
+                "last_successful_cutoff": { "type": ["string", "null"], "format": "date-time" },
+                "recent_dedupe": { "type": "array", "items": { "type": "string" }, "maxItems": 500 },
+                "pending_reconciliation": { "type": "array", "items": { "type": "object" } }
+              },
+              "additionalProperties": false
+            }
+          },
+          "runs": { "type": "array", "items": { "type": "object" }, "maxItems": 100 }
         },
         "additionalProperties": false
       }
-    },
-    "runs": { "type": "array", "items": { "type": "object" }, "maxItems": 100 }
+    }
   },
   "additionalProperties": false
 }

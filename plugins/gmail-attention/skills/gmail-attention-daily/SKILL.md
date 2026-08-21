@@ -27,7 +27,7 @@ python3 ../../scripts/memory_store.py validate --root <memory-root>
 
 If persona or state cannot be loaded, do not mutate Gmail and do not invent a checkpoint. Report the run as incomplete. If the environment cannot provide durable storage, explain that recurring processing is not safely configured.
 
-Require every configured mailbox to include a connection, timezone, allowed labels, and allowed actions. The audit skill normally creates these bindings with the memory helper's `upsert-mailbox` command.
+Require every configured mailbox to include a connection, timezone, allowed labels, allowed actions, and a semantic label map for enabled routing categories. The audit skill normally creates these bindings with the memory helper's `upsert-mailbox` command.
 
 ## Verify mailbox identity
 
@@ -43,7 +43,7 @@ Fail only the affected mailbox when identity or access fails. Never substitute a
 ## Capture the run window
 
 - Capture one current cutoff before searching.
-- Use each mailbox's exact most recent successful cutoff as its exclusive lower bound.
+- Use each mailbox's exact most recent successful cutoff in the `daily` pipeline as its exclusive lower bound. Never read or advance a weekly pipeline checkpoint.
 - On a genuine first run with no checkpoint, use cutoff minus 24 hours.
 - Include exact Gmail received timestamps `> lower_bound` and `<= cutoff`.
 - Search All Mail. A query may look back 48 hours to tolerate coarse or delayed search results, but filter locally to the exact window.
@@ -104,7 +104,7 @@ python3 ../../scripts/memory_store.py record-run \
   --json '<run-record>'
 ```
 
-The run record must identify the captured cutoff and status for every mailbox. Never submit `complete` for a mailbox whose reporting, unsubscribe, or write verification is incomplete.
+The run record must set `pipeline` to `daily` and identify the captured cutoff and status for every mailbox. Never submit `complete` for a mailbox whose reporting, unsubscribe, or write verification is incomplete.
 
 Append compact decision evidence and message IDs when useful for future corrections, but never store message bodies.
 

@@ -21,7 +21,7 @@ This skill owns a one-time audit and implementation plan. It does not:
 - silently install a scheduled task;
 - rewrite shared plugin policy from one user's preferences.
 
-If the user wants recurring processing, finish the audit first and hand the approved persona to `$gmail-attention-daily`. Create or update a schedule only when the user explicitly asks.
+If the user wants recurring processing, finish the audit first and hand the approved persona to `$gmail-attention-daily` or `$gmail-attention-weekly-digest`. Create or update a schedule only when the user explicitly asks.
 
 ## Modes and authority
 
@@ -113,7 +113,7 @@ python3 ../../scripts/memory_store.py validate --root <memory-root>
 
 Default `<memory-root>` to an explicit user-provided location or the current project's `.gmail-attention/` directory. Never write persona data into the installed plugin. If durable storage is unavailable, return the proposed persona as a JSON artifact and say plainly that it has not been persisted.
 
-Configure each verified account with `upsert-mailbox`, save presentation choices with `set-output-preferences`, and save each approved behavior with `upsert-preference`. All three commands accept `--root` and `--json` using either inline JSON or `@path/to/file.json`.
+Configure each verified account with `upsert-mailbox`, including the approved semantic `label_map`; save presentation choices with `set-output-preferences`; and save each approved behavior with `upsert-preference`. All three commands accept `--root` and `--json` using either inline JSON or `@path/to/file.json`.
 
 Store only approved preferences and compact evidence. Do not store message bodies. Record inferred preferences as proposals, not active rules. Run `validate` again after the handoff is written.
 

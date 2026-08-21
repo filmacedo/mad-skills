@@ -14,7 +14,9 @@ User-owned `persona.json`. Contains explicit preferences, corrections, standing 
 
 ### Run state
 
-User-owned `state.json`. Contains per-mailbox successful cutoffs, bounded deduplication data, pending reconciliation, and recent run summaries. It is operational state, not preference memory.
+User-owned `state.json`. Contains independent pipelines such as `daily`, `weekly_content`, and `weekly_events`. Each pipeline owns its own per-mailbox successful cutoffs, bounded deduplication data, pending reconciliation, and recent run summaries. It is operational state, not preference memory.
+
+Never reuse or advance one pipeline's checkpoint for another pipeline. A successful daily cleanup does not imply that either weekly digest was delivered.
 
 ### Feedback and policy candidates
 
