@@ -37,7 +37,7 @@ For Detect mode, run only **Provenance and authority**, **Anti-overfitting**, an
 20. Are chat leakage and knowledge-cutoff disclaimers gone?
 21. Are dead phrases, transitions, engagement bait, and vague hype gone unless quoted or deliberate?
 22. Are literal or precise uses of “unlock” preserved rather than hard-banned?
-23. Are lists of publications, companies, customers, or notable people contextualized rather than used as unsupported authority?
+23. Are publications, companies, customers, or notable people kept only when the supplied material establishes relevant context, with unsupported names cut or flagged for the writer?
 24. Are redundant inline headers converted to prose while useful labels followed by new information remain intact?
 25. Are decorative technical metaphors replaced with concrete language while established domain terms and literal uses remain intact?
 
@@ -46,7 +46,7 @@ For Detect mode, run only **Provenance and authority**, **Anti-overfitting**, an
 26. Does sentence and paragraph length vary naturally?
 27. Were padded lists of three reduced without breaking real categories?
 28. Are abstract claims as concrete as the source material allows?
-29. In product, project, or technical writing, was generic copy that could describe anything replaced with a source-backed mechanism, instruction, fact, or number, or cut?
+29. In product, project, or technical writing, was generic copy that could describe anything replaced only with a mechanism, instruction, fact, or number already present in the supplied material, or otherwise cut or flagged for the writer?
 30. Do direct verbs and active subjects carry the prose where natural?
 
 ## Anti-overfitting

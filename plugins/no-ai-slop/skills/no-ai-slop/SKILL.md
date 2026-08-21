@@ -87,7 +87,7 @@ On AI-drafted text, rewrite stacked fragments that perform profundity. On human-
 
 **Weasel attribution — HARD.** Name the source behind “experts agree,” “studies show,” or “many argue,” or cut the claim. Never invent a source.
 
-**Unexplained name-dropping — STRONG.** A list of publications, companies, customers, or notable people is not evidence by itself. Keep the names that carry relevant context and say what each one did, said, or proved; otherwise cut the list.
+**Unexplained name-dropping — STRONG.** A list of publications, companies, customers, or notable people is not evidence by itself. Keep a name only when the supplied material gives it relevant context, and state only what that material establishes the person or organization did, said, or proved. Otherwise cut the name or ask the writer.
 
 **Importance puffery — HARD.** Replace “a pivotal moment,” “stands as a testament,” “plays a vital role,” and similar claims with the underlying fact.
 
@@ -134,7 +134,7 @@ Treat these as evidence, not a substitute for reading. Quoted examples, titles, 
 - Does sentence length vary naturally?
 - Are lists of three real categories or near-synonyms padding for completeness?
 - Can abstract claims become concrete using facts already in the draft?
-- In product, project, and technical writing, could a sentence appear unchanged in another project's copy? If so, replace it with a source-backed mechanism, instruction, fact, or number, or cut it.
+- In product, project, and technical writing, could a sentence appear unchanged in another project's copy? If so, replace it using only a mechanism, instruction, fact, or number already present in the supplied material. Otherwise cut it or ask the writer.
 - Do direct verbs replace noun phrases such as “made a decision” and “has the ability to”?
 - Does the piece use active voice and human subjects where natural?
 - Did any rule fire so mechanically that the result sounds like an AI imitating a human?
