@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brainstorm"
+  short_description: "Pressure-test an idea and choose the next experiment"
+  default_prompt: "Use $brainstorm to challenge this idea and recommend the smallest useful test."
