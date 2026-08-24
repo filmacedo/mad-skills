@@ -15,3 +15,7 @@ skills:
     status: replaced
     replaced_by: noticed repository ship-feature
     reason: The repository workflow now owns implementation and delivery.
+  - name: score-change
+    status: archived
+    archived_version: 0.2.0
+    reason: Hard safeguards belong in repository rules and tests; scoring rationale and calibration history belong in maintained documentation rather than a discoverable workflow.

@@ -6,11 +6,6 @@
   },
   "plugins": [
     {
-      "name": "noticed-factory",
-      "source": "./plugins/noticed-factory",
-      "description": "Filipe's relationship-score change protocol for noticed; former Factory workflows are archived."
-    },
-    {
       "name": "no-ai-slop",
       "source": "./plugins/no-ai-slop",
       "description": "Detect and remove AI-writing patterns without flattening the writer's voice."
