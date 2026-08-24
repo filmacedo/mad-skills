@@ -1,0 +1,17 @@
+plugin: noticed-factory
+archived_on: 2026-08-24
+skills:
+  - name: design-taste
+    status: archived
+    reason: The repository brand and UI rules own the durable guidance.
+  - name: frontend-prototype
+    status: archived
+    reason: Prototyping remains an optional implementation tactic, not a standalone workflow.
+  - name: new-feature
+    status: replaced
+    replaced_by: noticed repository create-prd
+    reason: The repository workflow owns Notion and codebase-specific PRD creation.
+  - name: ship-feature
+    status: replaced
+    replaced_by: noticed repository ship-feature
+    reason: The repository workflow now owns implementation and delivery.

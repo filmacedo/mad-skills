@@ -8,7 +8,7 @@
     {
       "name": "noticed-factory",
       "source": "./plugins/noticed-factory",
-      "description": "Filipe's noticed workflow: new-feature, ship-feature, frontend-prototype, design-taste, score-change."
+      "description": "Filipe's relationship-score change protocol for noticed; former Factory workflows are archived."
     },
     {
       "name": "no-ai-slop",
