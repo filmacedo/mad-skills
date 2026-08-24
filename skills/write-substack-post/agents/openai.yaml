@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Substack Post"
+  short_description: "Develop a personal essay and save its draft"
+  default_prompt: "Use $write-substack-post to help me develop this personal essay and save the approved draft in Notion."

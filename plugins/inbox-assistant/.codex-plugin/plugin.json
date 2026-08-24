@@ -1,0 +1,36 @@
+{
+  "name": "inbox-assistant",
+  "version": "0.3.0",
+  "description": "Audit Gmail and deliver safe daily, content, and events digests.",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com",
+    "url": "https://github.com/filmacedo"
+  },
+  "homepage": "https://github.com/filmacedo/mad-skills/tree/main/plugins/inbox-assistant",
+  "repository": "https://github.com/filmacedo/mad-skills",
+  "keywords": [
+    "gmail",
+    "inbox",
+    "email",
+    "digest"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Inbox Assistant",
+    "shortDescription": "Keep Gmail quiet and surface what matters",
+    "longDescription": "Audit Gmail, apply explicitly authorized cleanup, remember scoped preferences, and deliver daily priority, reading, and events digests.",
+    "developerName": "Filipe Macedo",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Audit my inbox and propose a cleanup plan.",
+      "Run my daily inbox digest.",
+      "Create my weekly content digest.",
+      "Create my weekly events digest."
+    ]
+  }
+}

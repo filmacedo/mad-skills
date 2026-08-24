@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Inbox"
+  short_description: "Audit Gmail and agree on safe cleanup"
+  default_prompt: "Use $audit-inbox to audit my Gmail and propose an evidence-backed cleanup plan."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "No AI Slop"
+  short_description: "Remove AI-writing habits without flattening voice"
+  default_prompt: "Use $no-ai-slop to edit this draft while preserving the writer's voice."

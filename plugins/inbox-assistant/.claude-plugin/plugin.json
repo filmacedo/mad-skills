@@ -1,0 +1,9 @@
+{
+  "name": "inbox-assistant",
+  "description": "Audit Gmail and deliver safe daily, content, and events digests.",
+  "version": "0.3.0",
+  "author": {
+    "name": "Filipe Macedo",
+    "email": "filipe@talentprotocol.com"
+  }
+}

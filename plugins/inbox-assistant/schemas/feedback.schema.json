@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/filmacedo/mad-skills/inbox-assistant/feedback.schema.json",
+  "title": "Inbox Assistant Feedback Event",
+  "type": "object",
+  "required": ["id", "recorded_at", "kind", "user_feedback", "interpretation"],
+  "properties": {
+    "id": { "type": "string" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "kind": {
+      "enum": ["exact_message_correction", "explicit_persistent_preference", "standing_permission", "inferred_preference", "resolved_item", "shared_policy_candidate"]
+    },
+    "digest_run_id": { "type": ["string", "null"] },
+    "mailbox": { "type": ["string", "null"] },
+    "message_ids": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "user_feedback": { "type": "string" },
+    "interpretation": { "type": "object" },
+    "applied_preference_id": { "type": ["string", "null"] },
+    "reconciliation": { "type": ["object", "null"] }
+  },
+  "additionalProperties": false
+}
