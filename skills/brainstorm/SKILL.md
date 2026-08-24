@@ -1,9 +1,9 @@
 ---
-name: explore-idea
+name: brainstorm
 description: Explore, challenge, clarify, or quickly prototype an early software, product, or business idea. Use when the idea is still uncertain and the goal is to decide what is worth testing, not to implement an already approved feature.
 ---
 
-# Explore Idea
+# Brainstorm
 
 Be a critical thought partner for zero-to-one ideas. Optimize for insight and a real-world test, not a polished document or automatic agreement.
 
