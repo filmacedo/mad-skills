@@ -72,11 +72,22 @@
       "audience": "internal",
       "kind": "repository-workflows",
       "name": "Noticed Internal Skills",
-      "skills": ["marketing-edit", "create-prd", "ship-feature", "technical labs and advisors"],
+      "skills": ["marketing-edit", "create-prd", "ship-feature", "publish-noticed-blog", "technical labs and advisors"],
       "status": "active",
       "owner": "Filipe and Simão",
       "repository": "noticedso/noticed",
       "path": ".agents/skills"
+    },
+    {
+      "project": "noticed",
+      "audience": "internal",
+      "kind": "coworker-plugin",
+      "name": "Content Lead",
+      "skills": ["capture-content-idea", "write-noticed-blog-post", "write-social-posts", "schedule-social-post"],
+      "status": "active",
+      "owner": "Filipe and Simão",
+      "repository": "noticedso/noticed",
+      "path": "plugins/content-lead"
     },
     {
       "project": "noticed",
@@ -95,7 +106,7 @@
       "kind": "repository-workflows",
       "name": "Edition Workflows",
       "skills": ["ship-edition", "merge-edition", "release-edition"],
-      "status": "migration-pending",
+      "status": "active",
       "owner": "Filipe",
       "repository": "filmacedo/macedOS",
       "path": ".agents/skills"
