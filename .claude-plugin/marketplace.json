@@ -1,5 +1,8 @@
 {
   "name": "filipe-skills",
+  "interface": {
+    "displayName": "Personal"
+  },
   "owner": {
     "name": "Filipe Macedo",
     "email": "filipe@talentprotocol.com"
@@ -8,12 +11,22 @@
     {
       "name": "chief-of-staff",
       "source": "./plugins/chief-of-staff",
-      "description": "Review the week, manage commitments, and draft founder updates."
+      "description": "Review the week, manage commitments, and draft founder updates.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     },
     {
       "name": "inbox-assistant",
       "source": "./plugins/inbox-assistant",
-      "description": "Audit Gmail and deliver safe daily, content, and events digests."
+      "description": "Audit Gmail and deliver safe daily, content, and events digests.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "description": "Filipe's personal skills and plugins collection."
