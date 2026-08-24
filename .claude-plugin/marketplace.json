@@ -6,14 +6,14 @@
   },
   "plugins": [
     {
-      "name": "no-ai-slop",
-      "source": "./plugins/no-ai-slop",
-      "description": "Detect and remove AI-writing patterns without flattening the writer's voice."
+      "name": "chief-of-staff",
+      "source": "./plugins/chief-of-staff",
+      "description": "Review the week, manage commitments, and draft founder updates."
     },
     {
-      "name": "gmail-attention",
-      "source": "./plugins/gmail-attention",
-      "description": "Audit Gmail once, create safe inbox rules, and run personalized daily or weekly attention briefs."
+      "name": "inbox-assistant",
+      "source": "./plugins/inbox-assistant",
+      "description": "Audit Gmail and deliver safe daily, content, and events digests."
     }
   ],
   "description": "Filipe's personal skills and plugins collection."

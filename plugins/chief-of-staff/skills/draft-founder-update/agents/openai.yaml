@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draft Founder Update"
+  short_description: "Turn company evidence into a founder update"
+  default_prompt: "Use $draft-founder-update to help me choose the angle and draft my next founder update."

@@ -1,0 +1,153 @@
+[
+  {
+    "id": "automated-calendar-acceptance",
+    "message": {
+      "sender_type": "calendar_automation",
+      "subject": "Accepted: Coffee tomorrow"
+    },
+    "expected": {
+      "purpose": "notifications",
+      "attention": "routine_cleanup",
+      "reason": "An automated RSVP acceptance is not human correspondence."
+    }
+  },
+  {
+    "id": "brief-human-acknowledgement",
+    "message": {
+      "sender_type": "known_person",
+      "subject": "Re: Quick update",
+      "text": "Cool!"
+    },
+    "expected": {
+      "purpose": "human_correspondence",
+      "attention": "fyi",
+      "reason": "Reply need does not determine whether correspondence was written by a person."
+    }
+  },
+  {
+    "id": "event-curation-newsletter",
+    "message": {
+      "sender_type": "bulk_list",
+      "subject": "Things to do in the city this weekend",
+      "content_summary": "Several concrete local events with dates and locations"
+    },
+    "expected": {
+      "purpose": "events",
+      "attention": "routine_cleanup",
+      "reason": "The primary value is event discovery rather than editorial reading."
+    }
+  },
+  {
+    "id": "event-venue-change",
+    "message": {
+      "sender_type": "event_platform",
+      "subject": "Important venue change for tomorrow"
+    },
+    "expected": {
+      "purpose": "events",
+      "attention": "act_now",
+      "reason": "Operational event logistics can create a timely consequence."
+    }
+  },
+  {
+    "id": "editorial-interview",
+    "message": {
+      "sender_type": "publisher",
+      "subject": "How founders build trust",
+      "content_summary": "An interview and analysis to read"
+    },
+    "expected": {
+      "purpose": "content",
+      "attention": "routine_cleanup",
+      "reason": "The email's primary value is editorial reading."
+    }
+  },
+  {
+    "id": "product-conversion-campaign",
+    "message": {
+      "sender_type": "vendor_marketing",
+      "subject": "Upgrade your trial today"
+    },
+    "expected": {
+      "purpose": "updates",
+      "attention": "routine_cleanup",
+      "reason": "The company is marketing its own product rather than publishing editorial content."
+    }
+  },
+  {
+    "id": "successful-payment-receipt",
+    "message": {
+      "sender_type": "payment_provider",
+      "subject": "Your payment receipt"
+    },
+    "expected": {
+      "purpose": "transactions",
+      "attention": "routine_cleanup",
+      "reason": "A completed payment record normally needs no action."
+    }
+  },
+  {
+    "id": "failed-payment",
+    "message": {
+      "sender_type": "payment_provider",
+      "subject": "Payment failed — update your card"
+    },
+    "expected": {
+      "purpose": "transactions",
+      "attention": "act_now",
+      "reason": "The same provider can send a transaction that requires timely remediation."
+    }
+  },
+  {
+    "id": "unsolicited-sales-pitch",
+    "message": {
+      "sender_type": "unknown_person",
+      "subject": "Quick idea to grow your pipeline",
+      "content_summary": "Unsolicited request to book a sales call"
+    },
+    "expected": {
+      "purpose": "cold_outreach",
+      "attention": "routine_cleanup",
+      "reason": "The message is unwanted outreach, not an existing human conversation."
+    }
+  },
+  {
+    "id": "brand-domain-mismatch",
+    "message": {
+      "sender_type": "unknown_domain",
+      "visible_brand": "Major email provider",
+      "action_link_host": "unrelated-example.org"
+    },
+    "expected": {
+      "purpose": "notifications",
+      "attention": "suspicious",
+      "reason": "A material brand and action-domain mismatch overrides normal handling."
+    }
+  },
+  {
+    "id": "reversible-inactivity-warning",
+    "message": {
+      "sender_type": "product_automation",
+      "subject": "Your inactive project may be paused",
+      "content_summary": "The project can be restored later and no data-loss deadline is stated"
+    },
+    "expected": {
+      "purpose": "notifications",
+      "attention": "fyi",
+      "reason": "A reversible informational warning is not a required future action."
+    }
+  },
+  {
+    "id": "retired-organization-persona-override",
+    "message": {
+      "sender_type": "authenticated_organization",
+      "subject": "Registration closes tomorrow",
+      "persona_context": "The user explicitly left this organization and requested archive-all"
+    },
+    "expected": {
+      "purpose": "notifications",
+      "attention": "routine_cleanup",
+      "reason": "An explicit organization-scoped persona preference overrides ordinary urgency after authentication."
+    }
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "name": "chief-of-staff",
+  "version": "0.2.0",
+  "description": "Review the week, manage commitments, and draft founder updates.",
+  "author": {
+    "name": "Filipe Macedo",
+    "url": "https://github.com/filmacedo"
+  },
+  "repository": "https://github.com/filmacedo/mad-skills",
+  "keywords": [
+    "chief-of-staff",
+    "weekly-review",
+    "tasks",
+    "founder-updates"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Chief of Staff",
+    "shortDescription": "Turn evidence into focus and clear updates",
+    "longDescription": "A personal coworker that reviews the week, maintains commitments, and turns company evidence into clear founder communication.",
+    "developerName": "Filipe Macedo",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Review my week and propose next week's focus.",
+      "Capture this task and help me prioritize it.",
+      "Help me draft the next founder update."
+    ]
+  }
+}

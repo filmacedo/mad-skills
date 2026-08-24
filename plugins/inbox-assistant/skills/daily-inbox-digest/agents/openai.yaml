@@ -1,0 +1,4 @@
+interface:
+  display_name: "Daily Inbox Digest"
+  short_description: "Surface daily priorities and clean approved mail"
+  default_prompt: "Use $daily-inbox-digest to process new Gmail and give me an action-first daily brief."

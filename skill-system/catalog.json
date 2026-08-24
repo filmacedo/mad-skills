@@ -1,0 +1,104 @@
+{
+  "lastReviewed": "2026-08-24",
+  "entries": [
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "coworker-plugin",
+      "name": "Chief of Staff",
+      "skills": ["weekly-review", "manage-tasks", "draft-founder-update"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "plugins/chief-of-staff"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "coworker-plugin",
+      "name": "Inbox Assistant",
+      "skills": ["audit-inbox", "daily-inbox-digest", "weekly-content-digest", "weekly-events-digest"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "plugins/inbox-assistant"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "Explore Idea",
+      "skills": ["explore-idea"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/explore-idea"
+    },
+    {
+      "project": "personal",
+      "audience": "general",
+      "kind": "capability",
+      "name": "No AI Slop",
+      "skills": ["no-ai-slop"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/no-ai-slop"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "Write Substack Post",
+      "skills": ["write-substack-post"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/write-substack-post"
+    },
+    {
+      "project": "madmac",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "Classify New Tracks",
+      "skills": ["madmac-classify-new-tracks"],
+      "status": "needs-repair",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/madmac-classify-new-tracks"
+    },
+    {
+      "project": "noticed",
+      "audience": "internal",
+      "kind": "repository-workflows",
+      "name": "Noticed Internal Skills",
+      "skills": ["marketing-edit", "create-prd", "ship-feature", "technical labs and advisors"],
+      "status": "active",
+      "owner": "Filipe and Simão",
+      "repository": "noticedso/noticed",
+      "path": ".agents/skills"
+    },
+    {
+      "project": "noticed",
+      "audience": "external",
+      "kind": "coworker-plugin",
+      "name": "Networking Assistant",
+      "skills": ["add-person", "event-debrief", "follow-up", "intro", "match-identities", "onboard", "research-person", "search-network"],
+      "status": "active-review-parked",
+      "owner": "noticed",
+      "repository": "noticedso/skills",
+      "path": "skills"
+    },
+    {
+      "project": "macedOS",
+      "audience": "Filipe",
+      "kind": "repository-workflows",
+      "name": "Edition Workflows",
+      "skills": ["ship-edition", "merge-edition", "release-edition"],
+      "status": "migration-pending",
+      "owner": "Filipe",
+      "repository": "filmacedo/macedOS",
+      "path": ".agents/skills"
+    }
+  ]
+}

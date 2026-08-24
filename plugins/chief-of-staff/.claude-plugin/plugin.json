@@ -1,0 +1,8 @@
+{
+  "name": "chief-of-staff",
+  "description": "Review the week, manage commitments, and draft founder updates.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Filipe Macedo"
+  }
+}

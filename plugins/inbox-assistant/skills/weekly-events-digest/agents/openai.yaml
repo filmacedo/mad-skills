@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weekly Events Digest"
+  short_description: "Find the week's most relevant events"
+  default_prompt: "Use $weekly-events-digest to organize this week's event discoveries by relevance and date."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage Tasks"
+  short_description: "Capture and plan personal commitments"
+  default_prompt: "Use $manage-tasks to help me capture, prioritize, or plan my commitments."

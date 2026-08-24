@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Idea"
+  short_description: "Pressure-test an idea and choose the next experiment"
+  default_prompt: "Use $explore-idea to challenge this idea and recommend the smallest useful test."

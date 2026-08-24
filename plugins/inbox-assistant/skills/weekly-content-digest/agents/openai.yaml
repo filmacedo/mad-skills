@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weekly Content Digest"
+  short_description: "Curate the week's worthwhile reading"
+  default_prompt: "Use $weekly-content-digest to curate the newsletters and articles worth reading this week."
