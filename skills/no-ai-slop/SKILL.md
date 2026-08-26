@@ -167,3 +167,10 @@ Treat these as evidence, not a substitute for reading. Quoted examples, titles, 
 4. For Edit mode, make the minimum effective changes.
 5. Run every applicable check in `eval.md`; fix failures and re-run.
 6. Return the full draft and **What changed**.
+
+If repeated real feedback exposes a durable failure in this skill, propose the
+smallest correction after the edit is complete. Check existing
+`skill-improvement` issues in `filmacedo/mad-skills`, then offer to create or
+update one using compact, non-sensitive evidence. Create or update the issue
+only after the user's explicit approval. Never rewrite the skill without
+approval, and do not invent an improvement after every use.
