@@ -49,6 +49,17 @@
       "project": "personal",
       "audience": "Filipe",
       "kind": "capability",
+      "name": "Debug",
+      "skills": ["debug"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/debug"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
       "name": "TDD",
       "skills": ["tdd"],
       "status": "active",

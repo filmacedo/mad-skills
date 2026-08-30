@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug"
+  short_description: "Find and prove the cause of software failures"
+  default_prompt: "Use $debug to find the cause of this failure before proposing a fix."
