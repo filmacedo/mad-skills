@@ -26,6 +26,17 @@
     {
       "project": "personal",
       "audience": "Filipe",
+      "kind": "capability-plugin",
+      "name": "Engineering",
+      "skills": ["prototype", "debug", "tdd", "code-review", "simplify-code", "ship", "cleanup-workspaces"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "plugins/engineering"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
       "kind": "capability",
       "name": "Brainstorm",
       "skills": ["brainstorm"],
@@ -38,34 +49,12 @@
       "project": "personal",
       "audience": "Filipe",
       "kind": "capability",
-      "name": "Code Review",
-      "skills": ["code-review"],
+      "name": "Challenge Me",
+      "skills": ["challenge-me"],
       "status": "active",
       "owner": "Filipe",
       "repository": "filmacedo/mad-skills",
-      "path": "skills/code-review"
-    },
-    {
-      "project": "personal",
-      "audience": "Filipe",
-      "kind": "capability",
-      "name": "Debug",
-      "skills": ["debug"],
-      "status": "active",
-      "owner": "Filipe",
-      "repository": "filmacedo/mad-skills",
-      "path": "skills/debug"
-    },
-    {
-      "project": "personal",
-      "audience": "Filipe",
-      "kind": "capability",
-      "name": "TDD",
-      "skills": ["tdd"],
-      "status": "active",
-      "owner": "Filipe",
-      "repository": "filmacedo/mad-skills",
-      "path": "skills/tdd"
+      "path": "skills/challenge-me"
     },
     {
       "project": "personal",

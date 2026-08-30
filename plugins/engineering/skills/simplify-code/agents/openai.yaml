@@ -1,0 +1,6 @@
+interface:
+  display_name: "Simplify Code"
+  short_description: "Reduce complexity without changing behavior"
+  default_prompt: "Use $simplify-code to make this working change easier to understand before merge."
+policy:
+  allow_implicit_invocation: false

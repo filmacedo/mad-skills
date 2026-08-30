@@ -27,6 +27,16 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "engineering",
+      "source": "./plugins/engineering",
+      "description": "Prototype, build, review, ship, simplify, and clean up software across repositories.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "description": "Filipe's personal skills and plugins collection."

@@ -7,7 +7,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 
 class CodexMarketplaceTests(unittest.TestCase):
-    def test_personal_marketplace_exposes_both_plugins(self) -> None:
+    def test_personal_marketplace_exposes_all_plugins(self) -> None:
         marketplace_path = REPOSITORY_ROOT / ".agents/plugins/marketplace.json"
         self.assertTrue(
             marketplace_path.is_file(),
@@ -21,6 +21,7 @@ class CodexMarketplaceTests(unittest.TestCase):
         expected_paths = {
             "chief-of-staff": "./plugins/chief-of-staff",
             "inbox-assistant": "./plugins/inbox-assistant",
+            "engineering": "./plugins/engineering",
         }
         self.assertEqual(
             [plugin["name"] for plugin in marketplace["plugins"]],

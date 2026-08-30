@@ -1,14 +1,16 @@
 # Skill system
 
-This repository is the canonical home for Filipe's portable personal coworkers, standalone capabilities, and their maintenance process. Project-specific workflows remain in the repositories they operate.
+This repository is the canonical home for Filipe's portable personal plugins, standalone capabilities, and their maintenance process. Project-specific workflows remain in the repositories they operate.
 
 ```text
-coworker plugin
-└── several skills serving one mission
+plugin
+└── several related skills serving one mission
 
 standalone capability
 └── one independent skill
 ```
+
+Skills are available for automatic selection unless their `agents/openai.yaml` sets `allow_implicit_invocation: false`. Use that explicit-only policy for intentional workflows that should begin only when Filipe asks for them, while keeping reusable disciplines available to project workflows.
 
 ## Update loop
 

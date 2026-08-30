@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cleanup Workspaces"
+  short_description: "Safely reclaim space after completed development work"
+  default_prompt: "Use $cleanup-workspaces to audit and clean resources left by finished work."
+policy:
+  allow_implicit_invocation: false
