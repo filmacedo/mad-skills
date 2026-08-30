@@ -1,5 +1,5 @@
 {
-  "lastReviewed": "2026-08-24",
+  "lastReviewed": "2026-08-30",
   "entries": [
     {
       "project": "personal",
@@ -33,6 +33,28 @@
       "owner": "Filipe",
       "repository": "filmacedo/mad-skills",
       "path": "skills/brainstorm"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "Code Review",
+      "skills": ["code-review"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/code-review"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "TDD",
+      "skills": ["tdd"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/tdd"
     },
     {
       "project": "personal",

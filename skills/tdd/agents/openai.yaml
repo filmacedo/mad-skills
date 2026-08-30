@@ -1,0 +1,4 @@
+interface:
+  display_name: "TDD"
+  short_description: "Build behavior through a red-green loop"
+  default_prompt: "Use $tdd to implement this behavior test-first."
