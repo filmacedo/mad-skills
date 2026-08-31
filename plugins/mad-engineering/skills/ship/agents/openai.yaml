@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ship"
+  short_description: "Take a change to a ready PR or authorized merge"
+  default_prompt: "Use $ship to finish this change and take it to a ready pull request."
+policy:
+  allow_implicit_invocation: false

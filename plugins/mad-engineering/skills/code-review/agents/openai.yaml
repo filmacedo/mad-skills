@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Review a change for correctness and risk"
+  default_prompt: "Use $code-review to review this change and report actionable findings."

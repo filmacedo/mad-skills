@@ -1,0 +1,8 @@
+{
+  "name": "mad-engineering",
+  "description": "Prototype, build, review, ship, simplify, and clean up software across repositories.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Filipe Macedo"
+  }
+}

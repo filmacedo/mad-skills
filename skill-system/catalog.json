@@ -1,5 +1,5 @@
 {
-  "lastReviewed": "2026-08-24",
+  "lastReviewed": "2026-08-30",
   "entries": [
     {
       "project": "personal",
@@ -26,6 +26,17 @@
     {
       "project": "personal",
       "audience": "Filipe",
+      "kind": "capability-plugin",
+      "name": "Mad Engineering",
+      "skills": ["prototype", "debug", "tdd", "code-review", "simplify-code", "ship", "cleanup-workspaces"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "plugins/mad-engineering"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
       "kind": "capability",
       "name": "Brainstorm",
       "skills": ["brainstorm"],
@@ -33,6 +44,17 @@
       "owner": "Filipe",
       "repository": "filmacedo/mad-skills",
       "path": "skills/brainstorm"
+    },
+    {
+      "project": "personal",
+      "audience": "Filipe",
+      "kind": "capability",
+      "name": "Challenge Me",
+      "skills": ["challenge-me"],
+      "status": "active",
+      "owner": "Filipe",
+      "repository": "filmacedo/mad-skills",
+      "path": "skills/challenge-me"
     },
     {
       "project": "personal",

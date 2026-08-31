@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prototype"
+  short_description: "Build the smallest experience that answers a question"
+  default_prompt: "Use $prototype to build the smallest disposable test of this idea."
