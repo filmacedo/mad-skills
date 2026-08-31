@@ -1,5 +1,5 @@
 {
-  "name": "engineering",
+  "name": "mad-engineering",
   "version": "0.1.0",
   "description": "Prototype, build, review, ship, simplify, and clean up software across repositories.",
   "author": {
@@ -16,7 +16,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Engineering",
+    "displayName": "Mad Engineering",
     "shortDescription": "Build and ship software with proportionate rigor",
     "longDescription": "A portable engineering toolkit for prototyping, debugging, test-driven development, independent code review, simplification, shipping, and safe post-merge cleanup.",
     "developerName": "Filipe Macedo",

@@ -21,7 +21,7 @@ class CodexMarketplaceTests(unittest.TestCase):
         expected_paths = {
             "chief-of-staff": "./plugins/chief-of-staff",
             "inbox-assistant": "./plugins/inbox-assistant",
-            "engineering": "./plugins/engineering",
+            "mad-engineering": "./plugins/mad-engineering",
         }
         self.assertEqual(
             [plugin["name"] for plugin in marketplace["plugins"]],

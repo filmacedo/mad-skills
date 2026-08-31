@@ -29,8 +29,8 @@
       "category": "Productivity"
     },
     {
-      "name": "engineering",
-      "source": "./plugins/engineering",
+      "name": "mad-engineering",
+      "source": "./plugins/mad-engineering",
       "description": "Prototype, build, review, ship, simplify, and clean up software across repositories.",
       "policy": {
         "installation": "AVAILABLE",

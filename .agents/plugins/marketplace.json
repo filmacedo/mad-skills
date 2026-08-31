@@ -29,10 +29,10 @@
       "category": "Productivity"
     },
     {
-      "name": "engineering",
+      "name": "mad-engineering",
       "source": {
         "source": "local",
-        "path": "./plugins/engineering"
+        "path": "./plugins/mad-engineering"
       },
       "policy": {
         "installation": "AVAILABLE",
